@@ -2,6 +2,7 @@ using HabitTracker.Application.Interfaces;
 using HabitTracker.Application.Services;
 using HabitTracker.Infrastructure.Data;
 using HabitTracker.Infrastructure.Repositories;
+using HabitTracker.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IHabitRepository, HabitRepository>();
 builder.Services.AddScoped<IHabitService, HabitService>();
 builder.Services.AddScoped<IStreakCalculator, StreakCalculator>();
+builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddSingleton<IAuthService, MockAuthService>();
 
 var app = builder.Build();
 
