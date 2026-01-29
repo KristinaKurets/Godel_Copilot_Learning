@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 import Dashboard from './pages/Dashboard';
@@ -11,8 +9,6 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import LoginPage from './pages/LoginPage';
 import './App.css';
-
-const API_URL = 'http://localhost:5081/api/habits';
 
 function ProtectedApp() {
   const { isAuthenticated } = useAuth();

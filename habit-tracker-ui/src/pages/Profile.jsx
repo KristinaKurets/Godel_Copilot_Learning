@@ -1,51 +1,193 @@
+import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { 
+  User, 
+  Calendar, 
+  Trophy, 
+  Target, 
+  Award, 
+  TrendingUp,
+  Loader2,
+  AlertCircle 
+} from 'lucide-react';
 import './Profile.css';
+
+const API_URL = 'http://localhost:5081/api/profile';
 
 function Profile() {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    setLoading(true);
+    setError('');
+    
+    try {
+      const response = await axios.get(API_URL);
+      setProfile(response.data);
+    } catch (err) {
+      setError('Failed to load profile data. Make sure the API is running.');
+      console.error('Error fetching profile:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Recently';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  };
+
+  const getProgressToNextLevel = () => {
+    if (!profile) return 0;
+    const currentLevelCompletions = profile.level * 10;
+    const completionsInCurrentLevel = profile.totalCompletions - currentLevelCompletions;
+    return (completionsInCurrentLevel / 10) * 100;
+  };
+
+  const getCompletionsToNextLevel = () => {
+    if (!profile) return 10;
+    const currentLevelCompletions = profile.level * 10;
+    const nextLevelCompletions = (profile.level + 1) * 10;
+    return nextLevelCompletions - profile.totalCompletions;
+  };
+
+  if (loading) {
+    return (
+      <div className="profile">
+        <div className="loading-spinner">
+          <Loader2 className="spinner" size={60} />
+          <p>Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="profile">
+        <div className="error-state">
+          <AlertCircle className="error-icon" size={80} />
+          <h2>Oops! Something went wrong</h2>
+          <p>{error}</p>
+          <button onClick={fetchProfile} className="btn btn-primary">
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="profile">
       <header className="page-header">
-        <h1>Profile</h1>
-        <p>Manage your account and preferences</p>
+        <h1>Player Profile</h1>
+        <p>Your habit tracking journey</p>
       </header>
 
-      <div className="profile-grid">
-        <div className="card profile-card">
-          <div className="profile-avatar">
-            <User className="avatar-icon" size={64} />
+      {/* Main Profile Card */}
+      <div className="profile-card-main">
+        <div className="profile-header-section">
+          <div className="profile-avatar-large">
+            <User className="avatar-icon-large" size={80} />
+            <div className="level-badge">
+              <span className="level-number">{profile?.level || 0}</span>
+            </div>
           </div>
-          <h2>{user}</h2>
-          <p className="profile-email">{user}@habittracker.com</p>
-          <button className="btn btn-secondary">Edit Profile</button>
+          
+          <div className="profile-info">
+            <h2 className="profile-username">{user || profile?.username}</h2>
+            <div className="profile-meta">
+              <Calendar size={16} />
+              <span>Member since {formatDate(profile?.memberSince)}</span>
+            </div>
+          </div>
         </div>
 
-        <div className="card stats-card">
-          <h3>Your Stats</h3>
-          <div className="stats-list">
-            <div className="stat-item">
-              <span className="stat-label">Member Since</span>
-              <span className="stat-value">January 2024</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Total Habits</span>
-              <span className="stat-value">0</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Longest Streak</span>
-              <span className="stat-value">0 days</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Total Completions</span>
-              <span className="stat-value">0</span>
+        {/* Level Progress */}
+        <div className="level-section">
+          <div className="level-header">
+            <h3>Level {profile?.level || 0}</h3>
+            <span className="next-level">Next: Level {(profile?.level || 0) + 1}</span>
+          </div>
+          <div className="level-progress-bar">
+            <div 
+              className="level-progress-fill"
+              style={{ width: `${getProgressToNextLevel()}%` }}
+            >
+              <span className="progress-glow"></span>
             </div>
           </div>
+          <p className="level-hint">
+            <TrendingUp size={14} />
+            {getCompletionsToNextLevel()} more completions to level up!
+          </p>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="profile-stats-grid">
+          <div className="profile-stat-card">
+            <div className="stat-icon-wrapper stat-primary">
+              <Target size={32} />
+            </div>
+            <div className="stat-content">
+              <span className="stat-value">{profile?.totalCompletions || 0}</span>
+              <span className="stat-label">Total Completions</span>
+            </div>
+          </div>
+
+          <div className="profile-stat-card">
+            <div className="stat-icon-wrapper stat-success">
+              <Trophy size={32} />
+            </div>
+            <div className="stat-content">
+              <span className="stat-value">{profile?.achievementsUnlocked || 0}</span>
+              <span className="stat-label">Achievements</span>
+            </div>
+          </div>
+
+          <div className="profile-stat-card">
+            <div className="stat-icon-wrapper stat-info">
+              <Award size={32} />
+            </div>
+            <div className="stat-content">
+              <span className="stat-value">Level {profile?.level || 0}</span>
+              <span className="stat-label">Current Level</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="profile-actions">
+          <button 
+            className="btn btn-primary"
+            onClick={() => navigate('/achievements')}
+          >
+            <Trophy size={18} />
+            View Achievements
+          </button>
+          <button 
+            className="btn btn-secondary"
+            onClick={() => navigate('/habits')}
+          >
+            <Target size={18} />
+            View Habits
+          </button>
         </div>
       </div>
 
-      <div className="card">
+      {/* Preferences Section */}
+      <div className="card preferences-card">
         <h2>Preferences</h2>
         <div className="preferences-list">
           <div className="preference-item">

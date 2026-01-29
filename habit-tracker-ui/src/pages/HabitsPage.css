@@ -36,6 +36,31 @@
   font-size: 1.5rem;
 }
 
+.card-header-with-hint {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-header-with-hint h2 {
+  margin: 0;
+}
+
+.drag-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ad1457;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.drag-hint svg {
+  color: #f06292;
+}
+
 /* Form */
 .habit-form {
   width: 100%;
@@ -154,12 +179,73 @@
   align-items: center;
   gap: 20px;
   border: 2px solid #f48fb1;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
+  cursor: move;
+  position: relative;
 }
 
 .habit-item:hover {
   transform: translateX(4px);
   box-shadow: 0 4px 12px rgba(216, 27, 96, 0.15);
+}
+
+/* Drag Handle */
+.drag-handle {
+  cursor: grab;
+  color: #f06292;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.drag-handle:hover {
+  background: rgba(240, 98, 146, 0.1);
+  color: #ec407a;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Dragging State */
+.habit-item.dragging {
+  opacity: 0.5;
+  transform: scale(0.98);
+  box-shadow: 0 8px 24px rgba(216, 27, 96, 0.3);
+  cursor: grabbing;
+}
+
+/* Drag Over State */
+.habit-item.drag-over {
+  border-color: #ec407a;
+  border-style: dashed;
+  background: linear-gradient(135deg, #fff 0%, #fce4ec 100%);
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px rgba(236, 64, 122, 0.2);
+}
+
+.habit-item.drag-over::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ec407a 0%, #d81b60 100%);
+  border-radius: 2px;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .habit-icon {
@@ -239,10 +325,20 @@
     min-width: 100%;
   }
 
+  .card-header-with-hint {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
   .habit-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+  }
+
+  .drag-handle {
+    align-self: center;
   }
 
   .habit-icon {

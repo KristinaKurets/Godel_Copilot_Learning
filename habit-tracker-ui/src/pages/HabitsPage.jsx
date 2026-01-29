@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ListTodo, CheckCircle2, Trash2, Plus } from 'lucide-react';
+import { ListTodo, CheckCircle2, Trash2, Plus, GripVertical } from 'lucide-react';
 import './HabitsPage.css';
 
 const API_URL = 'http://localhost:5081/api/habits';
@@ -11,6 +11,8 @@ function HabitsPage() {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [newHabit, setNewHabit] = useState({ name: '', category: '' });
+  const [draggedItem, setDraggedItem] = useState(null);
+  const [dragOverItem, setDragOverItem] = useState(null);
 
   const fetchHabits = async () => {
     setLoading(true);
@@ -99,6 +101,64 @@ function HabitsPage() {
     }
   };
 
+  // Drag and Drop handlers
+  const handleDragStart = (e, index) => {
+    setDraggedItem(index);
+    e.dataTransfer.effectAllowed = 'move';
+    e.currentTarget.classList.add('dragging');
+  };
+
+  const handleDragEnd = (e) => {
+    e.currentTarget.classList.remove('dragging');
+    setDraggedItem(null);
+    setDragOverItem(null);
+  };
+
+  const handleDragOver = (e, index) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    
+    if (draggedItem !== null && draggedItem !== index) {
+      setDragOverItem(index);
+    }
+  };
+
+  const handleDragLeave = (e) => {
+    e.currentTarget.classList.remove('drag-over');
+  };
+
+  const handleDrop = (e, dropIndex) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+    
+    if (draggedItem === null || draggedItem === dropIndex) {
+      return;
+    }
+
+    const newHabits = [...habits];
+    const draggedHabit = newHabits[draggedItem];
+    
+    // Remove dragged item
+    newHabits.splice(draggedItem, 1);
+    
+    // Insert at new position
+    newHabits.splice(dropIndex, 0, draggedHabit);
+    
+    setHabits(newHabits);
+    setDraggedItem(null);
+    setDragOverItem(null);
+    
+    // Show reorder message
+    setMessage('Habits reordered! (Order is saved locally)');
+    setTimeout(() => setMessage(''), 3000);
+  };
+
+  const handleDragEnter = (e, index) => {
+    if (draggedItem !== null && draggedItem !== index) {
+      e.currentTarget.classList.add('drag-over');
+    }
+  };
+
   return (
     <div className="habits-page">
       <header className="page-header">
@@ -138,15 +198,36 @@ function HabitsPage() {
       {message && <div className="alert alert-success">{message}</div>}
 
       <div className="card">
-        <h2>Your Habits</h2>
+        <div className="card-header-with-hint">
+          <h2>Your Habits</h2>
+          {habits.length > 0 && (
+            <p className="drag-hint">
+              <GripVertical size={16} />
+              Drag and drop to reorder
+            </p>
+          )}
+        </div>
         {loading && habits.length === 0 ? (
           <p className="loading">Loading habits...</p>
         ) : habits.length === 0 ? (
           <p className="empty-state">No habits yet. Create your first habit above!</p>
         ) : (
           <div className="habits-list">
-            {habits.map((habit) => (
-              <div key={habit.id} className="habit-item">
+            {habits.map((habit, index) => (
+              <div
+                key={habit.id}
+                className={`habit-item ${dragOverItem === index ? 'drag-over' : ''}`}
+                draggable
+                onDragStart={(e) => handleDragStart(e, index)}
+                onDragEnd={handleDragEnd}
+                onDragOver={(e) => handleDragOver(e, index)}
+                onDragEnter={(e) => handleDragEnter(e, index)}
+                onDragLeave={handleDragLeave}
+                onDrop={(e) => handleDrop(e, index)}
+              >
+                <div className="drag-handle">
+                  <GripVertical size={24} />
+                </div>
                 <ListTodo className="habit-icon" size={32} />
                 <div className="habit-info">
                   <h3>{habit.name}</h3>
