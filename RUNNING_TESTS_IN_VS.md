@@ -43,8 +43,74 @@ After running, you should see:
   ? GetAllHabitsAsync_RepositoryThrowsException_PropagatesException
   ? CreateHabitAsync_RepositoryThrowsException_PropagatesException
 
-Total: 24 tests, 24 passed ?
+? StatisticsServiceTests (9 passed)
+  ? GetStatisticsAsync_WithNoHabits_ReturnsZeroStatistics
+  ? GetStatisticsAsync_WithHabits_ReturnsTotalHabitsCount
+  ? GetStatisticsAsync_OnlyCountsActiveHabits
+  ? GetStatisticsAsync_CountsHabitsWithActiveStreaks
+  ? GetStatisticsAsync_CalculatesLongestStreak
+  ? GetStatisticsAsync_CountsCompletionsThisWeek
+  ? GetStatisticsAsync_CountsCompletionsThisMonth
+  ? GetStatisticsAsync_WithCompleteData_ReturnsAllStatistics
+
+? AchievementServiceTests (12 passed)
+  ? GetAchievementsAsync_WithNoHabits_ReturnsAllAchievementsUnlocked
+  ? GetAchievementsAsync_WithFirstHabit_UnlocksFirstHabitAchievement
+  ? GetAchievementsAsync_WithFiveHabits_UnlocksFiveHabitsAchievement
+  ? GetAchievementsAsync_WithSevenDayStreak_UnlocksSevenDayAchievement
+  ? GetAchievementsAsync_WithThirtyDayStreak_UnlocksThirtyDayAchievement
+  ? GetAchievementsAsync_WithHundredCompletions_UnlocksHundredCompletionsAchievement
+  ? GetAchievementsAsync_WithPerfectWeek_UnlocksPerfectWeekAchievement
+  ? GetAchievementsAsync_WithPartialProgress_ShowsCorrectProgress
+  ? GetAchievementsAsync_ReturnsUnlockedAchievementsFirst
+  ? GetAchievementsAsync_OnlyCountsActiveHabits
+  ? GetAchievementsAsync_IncludesAllDefinedAchievements
+  ? GetAchievementsAsync_AllAchievementsHaveRequiredProperties
+
+? UserProfileServiceTests (11 passed)
+  ? GetUserProfileAsync_WithNoData_ReturnsDefaultProfile
+  ? GetUserProfileAsync_WithFirstHabit_SetsMemberSinceDate
+  ? GetUserProfileAsync_WithMultipleHabits_ReturnsFirstCreationDate
+  ? GetUserProfileAsync_IncludesInactiveHabitsForMemberSince
+  ? GetUserProfileAsync_CountsTotalCompletions
+  ? GetUserProfileAsync_CountsUnlockedAchievements
+  ? GetUserProfileAsync_CalculatesLevelFrom10Completions
+  ? GetUserProfileAsync_LevelZeroWith9Completions
+  ? GetUserProfileAsync_Level10With100Completions
+  ? GetUserProfileAsync_AlwaysReturnsHabitHeroUsername
+  ? GetUserProfileAsync_WithCompleteProfile_ReturnsAllData
+
+? MockAuthServiceTests (15 passed)
+  ? Login_WithValidUsername_ReturnsSuccessWithToken
+  ? Login_WithEmptyUsername_ReturnsError
+  ? Login_WithWhitespaceUsername_ReturnsError
+  ? Login_GeneratesUniqueTokensForSameUser
+  ? GetCurrentUser_WithValidToken_ReturnsAuthenticatedUser
+  ? GetCurrentUser_WithInvalidToken_ReturnsUnauthenticated
+  ? GetCurrentUser_WithNullToken_ReturnsUnauthenticated
+  ? GetCurrentUser_WithEmptyToken_ReturnsUnauthenticated
+  ? Logout_WithValidToken_RemovesToken
+  ? Logout_WithInvalidToken_DoesNotThrow
+  ? Logout_WithNullToken_DoesNotThrow
+  ? Login_MultipleUsers_StoredIndependently
+  ? Logout_OneUser_DoesNotAffectOtherUsers
+  ? Login_WithSpecialCharactersInUsername_WorksCorrectly
+  ? Login_WithLongUsername_WorksCorrectly
+
+Total: 69 tests, 69 passed ?
 ```
+
+## Test Suites Overview
+
+| Test Suite | Tests | Purpose |
+|------------|-------|---------|
+| StreakCalculatorTests | 13 | Streak calculation logic |
+| HabitServiceTests | 11 | Habit CRUD operations |
+| StatisticsServiceTests | 9 | Dashboard statistics |
+| AchievementServiceTests | 12 | Achievement unlocking |
+| UserProfileServiceTests | 11 | User profile aggregation |
+| MockAuthServiceTests | 15 | Authentication flow |
+| **Total** | **69** | **Complete coverage** |
 
 ## Debugging Tests
 
@@ -71,6 +137,7 @@ Total: 24 tests, 24 passed ?
 ### Filter Tests
 - Use the search box to filter tests by name
 - Example: Type "Streak" to see only streak calculator tests
+- Example: Type "Achievement" to see only achievement tests
 
 ## Code Coverage (Visual Studio Enterprise)
 
@@ -113,8 +180,9 @@ Total: 24 tests, 24 passed ?
 ### Tests failing unexpectedly?
 1. Check test output for error messages
 2. Verify Moq package is installed
-3. Ensure project references are correct
-4. Check that test project targets correct framework (net10.0)
+3. Verify EF Core InMemory package is installed
+4. Ensure project references are correct
+5. Check that test project targets correct framework (net10.0)
 
 ## Running from Command Line (within VS)
 
@@ -127,10 +195,19 @@ dotnet test
 1. `Tools` ? `Command Line` ? `Developer Command Prompt`
 2. Run: `dotnet test HabitTracker.Tests\HabitTracker.Tests.csproj`
 
+### Run Specific Test Class
+```powershell
+dotnet test --filter ClassName=AchievementServiceTests
+dotnet test --filter ClassName=MockAuthServiceTests
+```
+
 ## Best Practices
 
 ? **Run tests frequently** - After each code change
-? **Keep tests fast** - All tests should run in < 5 seconds
+? **Keep tests fast** - All 69 tests should run in < 3 seconds
 ? **Maintain test coverage** - Aim for 80%+ of business logic
 ? **Fix broken tests immediately** - Don't commit with failing tests
 ? **Use descriptive test names** - Should explain what's being tested
+? **Test edge cases** - Null values, empty collections, boundary conditions
+? **Isolate tests** - Use in-memory database with unique instance per test
+? **Verify behavior, not implementation** - Test outcomes, not internal details

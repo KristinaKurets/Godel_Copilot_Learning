@@ -1,0 +1,119 @@
+.achievements {
+  padding: 20px 0;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.page-header h1 {
+  color: #d81b60;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(216, 27, 96, 0.1);
+}
+
+.page-header p {
+  color: #ad1457;
+  font-size: 1.1rem;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.achievement-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(216, 27, 96, 0.1);
+  border: 2px solid #fce4ec;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.achievement-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(216, 27, 96, 0.15);
+}
+
+.achievement-card.locked {
+  opacity: 0.6;
+  background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
+}
+
+.achievement-card.locked .achievement-icon {
+  color: #999;
+}
+
+.achievement-card.unlocked {
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+  border-color: #f06292;
+}
+
+.achievement-icon {
+  margin: 0 auto 15px;
+  filter: grayscale(80%);
+}
+
+.achievement-card.unlocked .achievement-icon {
+  filter: grayscale(0%);
+  color: #d81b60;
+}
+
+.achievement-card h3 {
+  color: #c2185b;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.achievement-card p {
+  color: #ad1457;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.achievement-status {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #e0e0e0;
+  color: #757575;
+}
+
+.achievement-card.unlocked .achievement-status {
+  background: linear-gradient(135deg, #ec407a 0%, #d81b60 100%);
+  color: white;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(216, 27, 96, 0.1);
+  border: 2px solid #fce4ec;
+  text-align: center;
+}
+
+.card h2 {
+  color: #c2185b;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.card p {
+  color: #ad1457;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+}
