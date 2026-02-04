@@ -2,7 +2,7 @@
 
 A beautiful React frontend for the Habit Tracker API with a pink-themed interface.
 
-## ?? Quick Start
+## 📋 Quick Start
 
 ### Prerequisites
 - Node.js 18+ installed
@@ -27,18 +27,18 @@ npm run dev
 
 4. Open your browser to: **http://localhost:3000**
 
-## ?? Features
+## 📋 Features
 
-- ? View all habits with streak information
-- ? Add new habits with name and category
-- ? Mark habits complete for today (with duplicate prevention)
-- ? Delete habits with confirmation
-- ? Beautiful pink gradient theme
-- ? Responsive design (mobile-friendly)
-- ? Real-time updates after actions
-- ? Error handling and user feedback
+- ✅ View all habits with streak information
+- ✅ Add new habits with name and category
+- ✅ Mark habits complete for today (with duplicate prevention)
+- ✅ Delete habits with confirmation
+- ✅ Beautiful pink gradient theme
+- ✅ Responsive design (mobile-friendly)
+- ✅ Real-time updates after actions
+- ✅ Error handling and user feedback
 
-## ?? Interface
+## 📋 Interface
 
 ### Main Screen
 - **Header**: Welcome message
@@ -46,8 +46,8 @@ npm run dev
 - **Habits List**: Shows all active habits with:
   - Habit name
   - Category badge
-  - Current streak (??)
-  - Total completions (??)
+  - Current streak (📋)
+  - Total completions (📋)
   - Complete Today button
   - Delete button
 
@@ -57,7 +57,7 @@ npm run dev
 - Background: Gradient from `#ffeef8` to `#ffe0f0`
 - Accents: `#fce4ec` / `#f8bbd0`
 
-## ?? API Integration
+## 📋 API Integration
 
 The app connects to your .NET API at `https://localhost:7037`
 
@@ -79,22 +79,22 @@ proxy: {
 }
 ```
 
-## ?? Project Structure
+## 📋 Project Structure
 
 ```
 habit-tracker-ui/
-??? src/
-?   ??? App.jsx          # Main component with all logic
-?   ??? App.css          # Styling
-?   ??? main.jsx         # Entry point
-?   ??? index.css        # Global styles
-??? index.html           # HTML template
-??? vite.config.js       # Vite configuration
-??? package.json         # Dependencies
-??? README.md            # This file
+?📋 src/
+✅   ?📋 App.jsx          # Main component with all logic
+✅   ?📋 App.css          # Styling
+✅   ?📋 main.jsx         # Entry point
+✅   ?📋 index.css        # Global styles
+?📋 index.html           # HTML template
+?📋 vite.config.js       # Vite configuration
+?📋 package.json         # Dependencies
+?📋 README.md            # This file
 ```
 
-## ??? Development
+## ?📋 Development
 
 ### Available Scripts
 
@@ -108,7 +108,7 @@ habit-tracker-ui/
 2. Edit `src/App.css` for styling
 3. Changes auto-reload in the browser
 
-## ?? Troubleshooting
+## 📋 Troubleshooting
 
 ### API Connection Issues
 
@@ -138,7 +138,7 @@ If port 3000 is in use:
 1. The app will prompt you to use another port
 2. Or edit `vite.config.js` to change the port
 
-## ?? Usage Flow
+## 📋 Usage Flow
 
 1. **Start the API**:
    ```bash
@@ -154,17 +154,17 @@ If port 3000 is in use:
 3. **Use the app**:
    - Add a new habit using the form
    - Click "Complete Today" to log today's completion
-   - Watch your streak grow! ??
+   - Watch your streak grow! 📋
    - Delete habits you no longer need
 
-## ?? Responsive Design
+## 📋 Responsive Design
 
 The UI is fully responsive and works on:
-- ?? Mobile phones (320px+)
-- ?? Tablets (768px+)
-- ?? Desktops (1024px+)
+- 📋 Mobile phones (320px+)
+- 📋 Tablets (768px+)
+- 📋 Desktops (1024px+)
 
-## ?? Customizing Colors
+## 📋 Customizing Colors
 
 To change the pink theme, edit `src/App.css`:
 
@@ -178,7 +178,7 @@ To change the pink theme, edit `src/App.css`:
 --bg-lighter: #f8bbd0;
 ```
 
-## ?? Production Build
+## 📋 Production Build
 
 To build for production:
 
@@ -188,7 +188,7 @@ npm run build
 
 Output will be in the `dist/` folder. Deploy this folder to any static hosting service.
 
-## ?? Tips for Backend Devs
+## 📋 Tips for Backend Devs
 
 ### Understanding React Basics:
 - **Components**: Functions that return JSX (HTML-like syntax)
@@ -215,13 +215,13 @@ habits.map(habit => <div>...</div>)  // Like foreach loop
 - No need to restart the dev server
 - Check browser console for errors
 
-## ?? Learning Resources
+## 📋 Learning Resources
 
 - [React Docs](https://react.dev/)
 - [Vite Docs](https://vitejs.dev/)
 - [Axios Docs](https://axios-http.com/)
 
-## ?? Next Steps
+## 📋 Next Steps
 
 Once comfortable with the basics, you can:
 - Add more pages (routing with React Router)
