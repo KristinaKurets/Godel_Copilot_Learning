@@ -39,7 +39,7 @@ A complete habit-tracking application built **90% with GitHub Copilot**, featuri
 
 ### Tools Used
 
-**GitHub Copilot in Visual Studio Code** (GPT-4 based)
+**GitHub Copilot in Visual Studio Code** (Claude Sonnet 4.5 based)
 - Code completion, file creation, component scaffolding
 - Terminal command execution and error fixing
 - Multi-turn conversations for complex features
@@ -69,7 +69,7 @@ Create .NET 10 habit tracker API using Clean Architecture with:
 **Result:** 4 projects created with proper dependencies, EF Core configured, repository pattern implemented
 
 **What Changed:** 
-- ❌ Copilot created everything at once (overeger implementation)
+- ❌ Copilot created everything at once
 - ✅ Should have said "create ONLY project structure, no implementations"
 
 **Lesson:** Be explicit about what NOT to do when working with AI
@@ -91,7 +91,7 @@ In Application: Create IHabitRepository interface with:
 **Result:** Repository methods with async/await, StreakCalculator service, DTOs for API
 
 **What Changed:**
-- ❌ Copilot left unused methods causing build errors
+- ❌ Copilot left unused methods, causing build errors
 - ✅ Fixed with: "delete unused methods and implement the rest"
 
 **Lesson:** Think like you're instructing a robot 🤖, not a human with cognitive abilities
@@ -231,7 +231,7 @@ Add unit tests to HabitTracker.Tests project:
 ### 🎯 Best Practices Discovered
 
 **✅ DO:**
-- **Think like you're instructing a robot 🤖** (not a human with cognitive abilities)
+- **Think like you're instructing a robot** (not a human with cognitive abilities)
 - **Provide more context** rather than less
 - **Break large prompts** into smaller pieces if Copilot struggles
 - **Use checkpoints** - commit after successful prompts so you can roll back
@@ -275,9 +275,9 @@ Add unit tests to HabitTracker.Tests project:
 - Claude-based tools have fewer errors than GPT
 
 **3. Embrace the Retry Loop**
-- Don't get frustrated if first attempt isn't perfect
+- Don't get frustrated if the first attempt isn't perfect
 - Rollback and retry with refined prompts
-- 2-3 attempts often yield best results
+- 2-3 attempts often yield the best results
 
 **4. Communication is Key**
 - Be more explicit than you think necessary
@@ -351,31 +351,10 @@ dotnet test
 
 ---
 
-## 📊 Project Statistics
-
-- **Development Time:** 15-20 hours with AI
-- **Estimated Manual Time:** 40-60 hours
-- **Time Saved:** ~70%
-- **AI Contribution:** 90% code generated
-- **Lines of Code:** ~5,000+ (backend + frontend)
-- **Test Coverage:** 69 unit tests (all passing)
-- **Features Completed:** 100%
-
----
-
 ## 👥 Author
 
 **Kristina Kurets**
 - GitHub: [@KristinaKurets](https://github.com/KristinaKurets)
 - Project: [Godel_Copilot_Learning](https://github.com/KristinaKurets/Godel_Copilot_Learning)
 
-**AI Assistant:** GitHub Copilot (GPT-4 based)
-
----
-
-## 📝 License
-
-Open source for educational purposes.
-
-**Created:** January 2025  
-**Last Updated:** February 2026
+**AI Assistant:** GitHub Copilot (Claude Sonnet 4.5 based)
